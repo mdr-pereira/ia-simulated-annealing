@@ -14,6 +14,7 @@ public class DistanceMatrix {
 
     private ArrayList<String> cities;
     private ArrayList<ArrayList<Integer>> distances;
+    public int maxDistance; // added after, find way to calculate max distance
 
     /* A constructor that creates a new distance matrix given a file in the indicated format. */
     public DistanceMatrix(String fileName) {
@@ -57,8 +58,8 @@ public class DistanceMatrix {
     }
 
 
-    /* A constructor that creates a distance matrix given another and a a String initials. Assumes that
-     * the the String are the initials of a list of cities in the order of the original matrix. */
+    /* A constructor that creates a distance matrix given another and a String initials. Assumes that
+     * the String are the initials of a list of cities in the order of the original matrix. */
     public DistanceMatrix(DistanceMatrix m, String initials) {
         cities = m.getCities(initials);
         distances = new ArrayList<>();
@@ -150,5 +151,9 @@ public class DistanceMatrix {
         for (int i=0;i<distances.size();i++) {
             System.out.println(String.format("%1$10s" + " " + this.showRow(i),cities.get(i+1)));
         }
+    }
+
+    public int getMaxDistance() {
+        return maxDistance;
     }
 }
