@@ -3,9 +3,11 @@ import distanceMatrix.*;
 
 public class SimulatedAnnealing {
 
-    private static final double ALPHA = 0.9; // varies from 0.8 tp 0.99
+    private static final double CERTAINTY = 0.95;
+
+    private static final double ALPHA = 0.9; // Uses high values [0.8 - 0.99] as proven effective through practical testing.
     private static final double BETA = 0.01; // small enough value
-    private static final double ACCEPTED_MOVES_FLOOR = 0.10; // % of moves accepted (prob not right number)
+    private static final double ACCEPTED_MOVES_FLOOR = 0.10; // % of moves accepted [NOT CHECKED]
 
     private DistanceMatrix map;
     private double initialTemperature; // need to be calculated
@@ -15,8 +17,8 @@ public class SimulatedAnnealing {
 
     // TODO num iter per temp (n_iter*k, k slightly bigger than 1 || fixed num)1
 
-    public SimulatedAnnealing() {
-
+    public SimulatedAnnealing(DistanceMatrix map) {
+        this.map = map;
     }
 
     public Solution runAlgorithm() {
@@ -30,7 +32,9 @@ public class SimulatedAnnealing {
      * Init temp = max distance between cities
      */
     public void setInitTempDMax() {
-        initialTemperature = map.getMaxDistance();
+        this.initialTemperature = - map.getMaxDistance() / Math.log(CERTAINTY);
+
+        System.out.println(initialTemperature);
     }
 
     /**
@@ -46,7 +50,8 @@ public class SimulatedAnnealing {
     // TEMP VARIATION OPTIONS
 
     /**
-     * geometric variation of temperature
+     * Geometric variation of temperature
+     * 
      * @param temperature T(k-1)
      * @return new temperature
      */
@@ -56,6 +61,7 @@ public class SimulatedAnnealing {
 
     /**
      * Slow and gradual decay of temperature
+     * 
      * @param temperature T(k-1)
      * @return new temperature
      */
@@ -77,6 +83,7 @@ public class SimulatedAnnealing {
 
     /**
      * Stops algorithm if max num of iterations
+     * 
      * @return true if reached
      */
     public boolean stopCriteriaMaxIt() {
