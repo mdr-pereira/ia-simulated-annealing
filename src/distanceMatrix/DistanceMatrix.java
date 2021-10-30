@@ -43,7 +43,7 @@ public class DistanceMatrix {
             distances.add(list);
         }
 
-        this.maxDistance = calculateMaxDistance();
+        this.maxDistance = getMaxDistance();
     }
 
     /* A constructor that creates a distance matrix given another and a list of cities occurring in it.
@@ -58,6 +58,8 @@ public class DistanceMatrix {
             }
             distances.add(list);
         }
+
+        this.maxDistance = getMaxDistance();
     }
 
 
@@ -73,6 +75,8 @@ public class DistanceMatrix {
             }
             distances.add(list);
         }
+
+        this.maxDistance = getMaxDistance();
     }
 
     /* Returns the distance between two given cities. */
@@ -161,7 +165,7 @@ public class DistanceMatrix {
      * 
      * @return - maximum distance
      */
-    private int calculateMaxDistance() {
+    public int getMaxDistance() {
         int res = 0; //All distances are positive, 0 can be used as base number
 
         for(ArrayList<Integer> row: distances) {
@@ -173,7 +177,4 @@ public class DistanceMatrix {
         return res;
     }
 
-    public int getMaxDistance() {
-        return maxDistance;
-    }
 }
