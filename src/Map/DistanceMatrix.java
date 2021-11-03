@@ -1,4 +1,4 @@
-package distanceMatrix;
+package Map;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
