@@ -1,4 +1,4 @@
-package Map;
+package distanceMatrix;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -14,11 +14,13 @@ public class DistanceMatrix {
 
     private ArrayList<String> cities;
     private ArrayList<ArrayList<Integer>> distances;
+    public int maxDistance; 
 
     /* A constructor that creates a new distance matrix given a file in the indicated format. */
     public DistanceMatrix(String fileName) {
         cities = new ArrayList<>();
         distances = new ArrayList<>();
+
         Scanner sc = null;
         try {
             sc = new Scanner(new BufferedReader(new FileReader(fileName)));
@@ -40,6 +42,8 @@ public class DistanceMatrix {
             }
             distances.add(list);
         }
+
+        this.maxDistance = getMaxDistance();
     }
 
     /* A constructor that creates a distance matrix given another and a list of cities occurring in it.
@@ -54,11 +58,13 @@ public class DistanceMatrix {
             }
             distances.add(list);
         }
+
+        this.maxDistance = getMaxDistance();
     }
 
 
-    /* A constructor that creates a distance matrix given another and a a String initials. Assumes that
-     * the the String are the initials of a list of cities in the order of the original matrix. */
+    /* A constructor that creates a distance matrix given another and a String initials. Assumes that
+     * the String are the initials of a list of cities in the order of the original matrix. */
     public DistanceMatrix(DistanceMatrix m, String initials) {
         cities = m.getCities(initials);
         distances = new ArrayList<>();
@@ -69,6 +75,8 @@ public class DistanceMatrix {
             }
             distances.add(list);
         }
+
+        this.maxDistance = getMaxDistance();
     }
 
     /* Returns the distance between two given cities. */
@@ -151,4 +159,22 @@ public class DistanceMatrix {
             System.out.println(String.format("%1$10s" + " " + this.showRow(i),cities.get(i+1)));
         }
     }
+
+    /**
+     * Calculates the maximum distance between cities.
+     * 
+     * @return - maximum distance
+     */
+    public int getMaxDistance() {
+        int res = 0; //All distances are positive, 0 can be used as base number
+
+        for(ArrayList<Integer> row: distances) {
+            for(int dist: row) {
+                if (res < dist)
+                    res = dist;
+            }
+        }
+        return res;
+    }
+
 }
