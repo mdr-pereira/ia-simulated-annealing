@@ -1,40 +1,49 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import SimulatedAnnealing.*;
 import distanceMatrix.DistanceMatrix;
 
 public class Main {
 
     public static void main(String[] args) {
-        DistanceMatrix map = new DistanceMatrix("/home/manuelp/Documents/university/IA/simulated-annealing/exMatrix.txt");
+        DistanceMatrix map = new DistanceMatrix("/home/manuel-pereira/Documents/university/IA/simulated-annealing/exMatrix.txt");
 
-        // System.out.println(map.getMaxDistance());
+        SimulatedAnnealingClass alg = new SimulatedAnnealingClass(map);
 
-        SimulatedAnnealing sa = new SimulatedAnnealing(map);
+        ArrayList<String> E1 = new ArrayList<>();
+        E1.add("Atroeira");
+        E1.add("Douro");
+        E1.add("Pinhal");
+        E1.add("Teixoso");
+        E1.add("Ulgueira");
+        E1.add("Vilar");
 
-        sa.runAlgorithm();
-        Solution best = sa.getBestSolution();
-        Solution worst = sa.getWorstSolution();
-        Solution initial = sa.getInitialSolution();
-        Solution last = sa.getLastSolution();
-        long runtime = sa.getRunTime();
-        int totalIt = sa.getTotalIt();
+        alg.runAlgorithm(E1);
 
-
-        System.out.println("RESULTS:");
-        System.out.println();
-
-        System.out.println("Algorithm run stats:");
-        System.out.println("- Runtime: " + runtime);
-        System.out.println("- Total iterations: " + totalIt);
-        System.out.println();
-
-        System.out.println("Initial Solution:");
-        System.out.println("- Iterations number: " + best.getNIteration());
-        System.out.println("- Temperature: " + best.getTemp());
-        System.out.println("- Solution: ");
-        // TODO ITERATION
-
-        //TODO REST
+        HashMap<String, Solution> solutions = new HashMap<>();
+        solutions.put("initial", alg.getInitialSolution());
+        solutions.put("best", alg.getBestSolution());
+        solutions.put("worst", alg.getWorstSolution());
+        solutions.put("last", alg.getLastSolution());
         
-        //sa.setInitTempDMax();
+        //=====================================================================
+
+        System.out.println("\nAlgorithm run stats:");
+        System.out.println("- Runtime: " +  alg.getRunTime());
+        System.out.println("- Total iterations: " + alg.getTotalIt());
+        System.out.println();
+
+        for(String solutionName: solutions.keySet()) {
+            Solution solution = solutions.get(solutionName);
+
+            System.out.println();
+            System.out.println(solutionName.toUpperCase());
+            System.out.println("\n- Iterations number: " + solution.getNIteration());
+            System.out.println("- Temperature: " + solution.getTemp());
+            System.out.println("- Solution: " + solution.getPath());
+            System.out.println("- Cost " + solution.getCost());
+
+        }
     }
 }
